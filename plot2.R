@@ -1,9 +1,7 @@
 ## dplyr, tidyr and lubridate packages necessary to run the following script
 ## install.packages("dpylr")
-## install.packages("tidyr")
 ## install.packages("lubridate")
 library("dplyr")
-library("tidyr")
 library("lubridate")
 
 ## Import data and extract date, time, and global active data for Feb 1st 
@@ -15,6 +13,7 @@ data <- data[grep("^[1-2]/2/2007", data$Date), ]
 data$Date <- paste(data$Date, " ", data$Time)
 data <- select(data, Date, Global_active_power)
 
+## Format data
 data$Global_active_power <- as.numeric(data$Global_active_power)
 data$Date <- dmy_hms(data$Date)
 
@@ -22,6 +21,7 @@ data$Date <- dmy_hms(data$Date)
 # plot(data$Date, data$Global_active_power, type = "l", xlab = "", 
 #      ylab = "Global Active Power (kilowatts)")
 
+## Constructs the time-series plot and saves it to wd as a png file
 png(file="./plot2.png", width = 480, height = 480)
 plot(data$Date, data$Global_active_power, type = "l", xlab = "", 
      ylab = "Global Active Power (kilowatts)")
